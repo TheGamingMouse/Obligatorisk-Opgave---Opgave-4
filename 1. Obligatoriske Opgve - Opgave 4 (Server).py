@@ -61,49 +61,38 @@ def handleCalculator(connectionSocket, address):
  txtStart = txtString.format(addr = addr)
  print(txtStart)
 
- x = sentence.split(' ')
- a = x[1]
- b = x[2]
- a2 = int(a)
- b2 = int(b)
+ a = int(sentence.split(' ')[1])
+ b = int(sentence.split(' ')[2])
+
+ txt = 'The {calc} of {num1} {x} {num2} = {result}'
+ txtCalc = ''
  
  if 'add' in sentence:
-  y = a2 + b2
+  y = a + b
   z = str(y)
-  txt = 'The {calc} of {num1} and {num2} equals: ', z
-  txtStr = str(txt)
-  txtCalc = txtStr.format(calc = 'addition', num1 = a, num2 = b)
+  txtCalc = txt.format(calc = 'addition', num1 = a, x = '+', num2 = b, result = y)
   print(txtCalc)
-  connectionSocket.send(txtCalc.encode())
  
  elif 'subtract' in sentence:
-  y = a2 - b2
+  y = a - b
   z = str(y)
-  txt = 'The {calc} of {num1} and {num2} equals: ', z
-  txtStr = str(txt)
-  txtCalc = txtStr.format(calc = 'subtraction', num1 = a, num2 = b)
+  txtCalc = txt.format(calc = 'subtraction', num1 = a, x = '-', num2 = b, result = y)
   print(txtCalc)
-  connectionSocket.send(txtCalc.encode())
- 
+  
  elif 'multiply' in sentence:
-  y = a2 * b2
+  y = a * b
   z = str(y)
-  txt = 'The {calc} of {num1} and {num2} equals: ', z
-  txtStr = str(txt)
-  txtCalc = txtStr.format(calc = 'multiplication', num1 = a, num2 = b)
+  txtCalc = txt.format(calc = 'multiplication', num1 = a, x = '*', num2 = b, result = y)
   print(txtCalc)
-  connectionSocket.send(txtCalc.encode())
- 
+  
  elif 'divide' in sentence:
-  y = a2 / b2
+  y = a / b
   z = str(y)
-  txt = 'The {calc} of {num1} and {num2} equals: ', z
-  txtStr = str(txt)
-  txtCalc = txtStr.format(calc = 'divition', num1 = a, num2 = b)
+  txtCalc = txt.format(calc = 'divition', num1 = a, x = '/', num2 = b, result = y)
   print(txtCalc)
-  connectionSocket.send(txtCalc.encode())
- 
- connectionSocket.send('Connection ended'.encode())
+  
+ connectionSocket.send(txtCalc.encode())
+ connectionSocket.send(' Connection ended'.encode())
  print('Connection closed for client: ', addr)
  connectionSocket.close()
  
