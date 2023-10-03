@@ -27,10 +27,15 @@ def HandleClient(connectionSocket, address):
 
 
 def handleWrongCommand(connectionSocket, address):
- connectionSocket.send('Wrong command, did you input a valid command word?. Connection ended'.encode())
+ connectionSocket.send('Wrong command, did you input a valid command word?'.encode())
+ handleClose(connectionSocket, addr)
  print('Wrong command from client: ', addr)
  print('Connection closed for client: ', addr)
  connectionSocket.close()
+
+
+def handleClose(connectionSocket, address):
+ connectionSocket.send(' Connection ended'.encode())
 
 
 def handleRandom(connectionSocket, address):
@@ -40,15 +45,15 @@ def handleRandom(connectionSocket, address):
  txtString = str(txtRecieved)
  txtStart = txtString.format(addr = addr)
  print(txtStart)
- x = sentence.split(' ')
- numStr1 = x[0]
- numStr2 = x[1]
- num1 = int(numStr1)
- num2 = int(numStr2)
+ 
+ num1 = int(sentence.split(' ')[0])
+ num2 = int(sentence.split(' ')[1])
  num = random.randrange(num1,num2)
  numStr = str(num)
+ print(numStr)
+ 
  connectionSocket.send(numStr.encode())
- connectionSocket.send('Connection ended'.encode())
+ handleClose(connectionSocket, addr)
  print('Connection closed for client: ', addr)
  connectionSocket.close()
 
@@ -92,7 +97,7 @@ def handleCalculator(connectionSocket, address):
   print(txtCalc)
   
  connectionSocket.send(txtCalc.encode())
- connectionSocket.send(' Connection ended'.encode())
+ handleClose(connectionSocket, addr)
  print('Connection closed for client: ', addr)
  connectionSocket.close()
  
