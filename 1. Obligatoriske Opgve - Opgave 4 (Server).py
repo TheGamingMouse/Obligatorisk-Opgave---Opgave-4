@@ -49,8 +49,8 @@ def handleRandom(connectionSocket, address):
  num1 = int(sentence.split(' ')[0])
  num2 = int(sentence.split(' ')[1])
  num = random.randrange(num1,num2)
- numStr = str(num)
- print(numStr)
+ numStr = str(f'Your random number between {num1} and {num2} is: {num}')
+ print(f'Client random number is: {num}')
  
  connectionSocket.send(numStr.encode())
  handleClose(connectionSocket, addr)
