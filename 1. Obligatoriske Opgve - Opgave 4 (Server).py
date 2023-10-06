@@ -30,76 +30,61 @@ def handleWrongCommand(connectionSocket, address):
  connectionSocket.send('Wrong command, did you input a valid command word?'.encode())
  handleClose(connectionSocket, addr)
  print('Wrong command from client: ', addr)
- print('Connection closed for client: ', addr)
- connectionSocket.close()
 
 
 def handleClose(connectionSocket, address):
- connectionSocket.send(' Connection ended'.encode())
+ connectionSocket.send('Connection ended'.encode())
+ print('Connection closed for client: ', addr)
+ connectionSocket.close()
 
 
 def handleRandom(connectionSocket, address):
  connectionSocket.send('Type two numbers, the server will respond with a random number between them.'.encode())
  sentence = connectionSocket.recv(1024).decode()
- txtRecieved = 'From client {addr}: ', sentence
- txtString = str(txtRecieved)
- txtStart = txtString.format(addr = addr)
- print(txtStart)
+ txt = str(f'From client {addr}: {sentence}.')
+ print(txt)
  
- num1 = int(sentence.split(' ')[0])
- num2 = int(sentence.split(' ')[1])
- num = random.randrange(num1,num2)
- numStr = str(f'Your random number between {num1} and {num2} is: {num}')
+ num = random.randrange(int(sentence.split(' ')[0]),int(sentence.split(' ')[1]))
+ numStr = str(f'Your random number between {int(sentence.split(" ")[0])} and {int(sentence.split(" ")[1])} is: {num}')
  print(f'Client random number is: {num}')
  
  connectionSocket.send(numStr.encode())
  handleClose(connectionSocket, addr)
- print('Connection closed for client: ', addr)
- connectionSocket.close()
 
 
 def handleCalculator(connectionSocket, address):
  connectionSocket.send('Type "Add", "Subtract", "Multiply", or "Divide" to get the corresponding function. Type two numbers after the command word, the server will use them for the calculation.'.encode())
  sentence = connectionSocket.recv(1024).decode()
- txtRecieved = 'From client {addr}: ', sentence
- txtString = str(txtRecieved)
- txtStart = txtString.format(addr = addr)
- print(txtStart)
+ txt = str(f'From client {addr}: {sentence}.')
+ print(txt)
 
  a = int(sentence.split(' ')[1])
  b = int(sentence.split(' ')[2])
 
- txt = 'The {calc} of {num1} {x} {num2} = {result}'
- txtCalc = ''
+ txtCalc = f''
  
  if 'add' in sentence:
   y = a + b
-  z = str(y)
-  txtCalc = txt.format(calc = 'addition', num1 = a, x = '+', num2 = b, result = y)
-  print(txtCalc)
+  txtCalc = f'The addition of {a} + {b} = {y}'
+  print('To client: ', txtCalc)
  
  elif 'subtract' in sentence:
   y = a - b
-  z = str(y)
-  txtCalc = txt.format(calc = 'subtraction', num1 = a, x = '-', num2 = b, result = y)
-  print(txtCalc)
+  txtCalc = f'The subtraction of {a} - {b} = {y}'
+  print('To client: ', txtCalc)
   
  elif 'multiply' in sentence:
   y = a * b
-  z = str(y)
-  txtCalc = txt.format(calc = 'multiplication', num1 = a, x = '*', num2 = b, result = y)
-  print(txtCalc)
+  txtCalc = f'The multiplication of {a} * {b} = {y}'
+  print('To client: ', txtCalc)
   
  elif 'divide' in sentence:
   y = a / b
-  z = str(y)
-  txtCalc = txt.format(calc = 'divition', num1 = a, x = '/', num2 = b, result = y)
-  print(txtCalc)
+  txtCalc = f'The divition of {a} / {b} = {y}'
+  print('To client: ', txtCalc)
   
  connectionSocket.send(txtCalc.encode())
  handleClose(connectionSocket, addr)
- print('Connection closed for client: ', addr)
- connectionSocket.close()
  
 
 print('The server is ready to receive')
