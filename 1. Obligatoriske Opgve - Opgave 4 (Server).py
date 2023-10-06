@@ -58,29 +58,22 @@ def handleCalculator(connectionSocket, address):
  txt = str(f'From client {addr}: {sentence}.')
  print(txt)
 
- a = int(sentence.split(' ')[1])
- b = int(sentence.split(' ')[2])
-
  txtCalc = f''
  
  if 'add' in sentence:
-  y = a + b
-  txtCalc = f'The addition of {a} + {b} = {y}'
+  txtCalc = f'The addition of {int(sentence.split(' ')[1])} + {int(sentence.split(' ')[2])} = {y = a + b}'
   print('To client: ', txtCalc)
  
  elif 'subtract' in sentence:
-  y = a - b
-  txtCalc = f'The subtraction of {a} - {b} = {y}'
+  txtCalc = f'The subtraction of {int(sentence.split(' ')[1])} - {int(sentence.split(' ')[2])} = {y = a - b}'
   print('To client: ', txtCalc)
   
  elif 'multiply' in sentence:
-  y = a * b
-  txtCalc = f'The multiplication of {a} * {b} = {y}'
+  txtCalc = f'The multiplication of {int(sentence.split(' ')[1])} * {int(sentence.split(' ')[2])} = {y = a * b}'
   print('To client: ', txtCalc)
   
  elif 'divide' in sentence:
-  y = a / b
-  txtCalc = f'The divition of {a} / {b} = {y}'
+  txtCalc = f'The divition of {int(sentence.split(' ')[1])} / {int(sentence.split(' ')[2])} = {y = a / b}'
   print('To client: ', txtCalc)
   
  connectionSocket.send(txtCalc.encode())
