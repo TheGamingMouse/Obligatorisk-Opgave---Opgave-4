@@ -7,13 +7,11 @@ serverSocket.bind(('', serverPort))
 serverSocket.listen(1)
 
 
-def HandleClient(connectionSocket, address):
+def HandleClient(connectionSocket, addr):
  connectionSocket.send('Type "Random" or "Calculator" to get the corresponding function.'.encode())
  sentence = connectionSocket.recv(1024).decode().lower()
- txtRecieved = 'From client {addr}: ', sentence
- txtString = str(txtRecieved)
- txtStart = txtString.format(addr = addr)
- print(txtStart)
+ txt = str(f'From client {addr}: {sentence}.')
+ print(txt)
  connectionSocket.send(' '.encode())
 
  if 'random' in sentence:
@@ -26,19 +24,19 @@ def HandleClient(connectionSocket, address):
   handleWrongCommand(connectionSocket, addr)
 
 
-def handleWrongCommand(connectionSocket, address):
+def handleWrongCommand(connectionSocket, addr):
  connectionSocket.send('Wrong command, did you input a valid command word?'.encode())
  handleClose(connectionSocket, addr)
  print('Wrong command from client: ', addr)
 
 
-def handleClose(connectionSocket, address):
+def handleClose(connectionSocket, addr):
  connectionSocket.send('Connection ended'.encode())
  print('Connection closed for client: ', addr)
  connectionSocket.close()
 
 
-def handleRandom(connectionSocket, address):
+def handleRandom(connectionSocket, addr):
  connectionSocket.send('Type two numbers, the server will respond with a random number between them.'.encode())
  sentence = connectionSocket.recv(1024).decode()
  txt = str(f'From client {addr}: {sentence}.')
@@ -52,7 +50,7 @@ def handleRandom(connectionSocket, address):
  handleClose(connectionSocket, addr)
 
 
-def handleCalculator(connectionSocket, address):
+def handleCalculator(connectionSocket, addr):
  connectionSocket.send('Type "Add", "Subtract", "Multiply", or "Divide" to get the corresponding function. Type two numbers after the command word, the server will use them for the calculation.'.encode())
  sentence = connectionSocket.recv(1024).decode()
  txt = str(f'From client {addr}: {sentence}.')
@@ -61,19 +59,19 @@ def handleCalculator(connectionSocket, address):
  txtCalc = f''
  
  if 'add' in sentence:
-  txtCalc = f'The addition of {int(sentence.split(' ')[1])} + {int(sentence.split(' ')[2])} = {y = a + b}'
+  txtCalc = f'The addition of {int(sentence.split(" ")[1])} + {int(sentence.split(" ")[2])} = {int(sentence.split(" ")[1]) + int(sentence.split(" ")[2])}'
   print('To client: ', txtCalc)
  
  elif 'subtract' in sentence:
-  txtCalc = f'The subtraction of {int(sentence.split(' ')[1])} - {int(sentence.split(' ')[2])} = {y = a - b}'
+  txtCalc = f'The subtraction of {int(sentence.split(" ")[1])} - {int(sentence.split(" ")[2])} = {int(sentence.split(" ")[1]) - int(sentence.split(" ")[2])}'
   print('To client: ', txtCalc)
   
  elif 'multiply' in sentence:
-  txtCalc = f'The multiplication of {int(sentence.split(' ')[1])} * {int(sentence.split(' ')[2])} = {y = a * b}'
+  txtCalc = f'The multiplication of {int(sentence.split(" ")[1])} * {int(sentence.split(" ")[2])} = {int(sentence.split(" ")[1]) * int(sentence.split(" ")[2])}'
   print('To client: ', txtCalc)
   
  elif 'divide' in sentence:
-  txtCalc = f'The divition of {int(sentence.split(' ')[1])} / {int(sentence.split(' ')[2])} = {y = a / b}'
+  txtCalc = f'The divition of {int(sentence.split(" ")[1])} / {int(sentence.split(" ")[2])} = {int(sentence.split(" ")[1]) / int(sentence.split(" ")[2])}'
   print('To client: ', txtCalc)
   
  connectionSocket.send(txtCalc.encode())
